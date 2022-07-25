@@ -1,0 +1,19 @@
+<p>abuelo works!</p>
+<app-padre></app-padre>
+
+<div>
+    <h2>Accediendo a los métodos de app-padre</h2>
+    <ul>
+        <li>
+            {{ this.metodoPadre1() }}
+        </li>
+        <li>
+            {{ this.metodoPadre2() }}
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h2>Mandando un metodo a app-padre</h2>
+    <button (click)="this.mandarPadre()">Mandar</button>
+</div>
