@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, DoCheck, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { PadreComponent } from '../padre/padre.component';
 
 @Component({
@@ -6,24 +6,29 @@ import { PadreComponent } from '../padre/padre.component';
   templateUrl: './abuelo.component.html',
   styleUrls: ['./abuelo.component.css']
 })
-export class AbueloComponent implements OnInit {
+export class AbueloComponent implements AfterViewInit {
 
   nombre: string;
   apellido: string;
+  viewChild: boolean = false;
 
-  metodoPadre1: () => void = (): void => {};
-  metodoPadre2: () => void = (): void => {};
+  nombrePadre: string = "";
+  apellidoPadre: string = "";
+
+  mensaje: string = "";
   
-  @ViewChild(PadreComponent, { static: true }) padre!: PadreComponent;
-  
-  ngAfterViewInit() {
-     this.padre.sayHello();
-     this.metodoPadre1 = this.padre.getName;
-     this.metodoPadre2 = this.padre.getLastName;
-     this.padre.sayBye();
+  @ViewChild(PadreComponent, { static: false }) padre!: PadreComponent;
+
+  ngAfterViewInit(): void {
+    console.log('Abuelo: ngAfterViewInit');
+    this.padre.sayHello();
+    this.nombrePadre= this.padre.getName();
+    this.apellidoPadre = this.padre.getLastName();
+    this.padre.sayBye();
   }
 
-  constructor() {
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
     this.nombre = 'Juan';
     this.apellido = 'Perez';
   }
@@ -49,7 +54,7 @@ export class AbueloComponent implements OnInit {
 
   public mandarPadre(): void {
     this.padre.diAlgo = () => {
-      console.log('Hola, mi padre me dice que diga algo');
+      console.log('Hola, mi padre me dice que diga algo: ' + this.mensaje);
       this.sayLastName();
     }
     this.padre.diAlgo();
@@ -60,6 +65,13 @@ export class AbueloComponent implements OnInit {
     this.padre.diAlgo();
     
     this.sayBye();
+  }
+
+  togglePadreView(): void {
+    this.viewChild = !this.viewChild;
+    this.changeDetectorRef.detectChanges();
+    this.nombrePadre ||= this.padre.getName();
+    this.apellidoPadre ||= this.padre.getLastName();
   }
 
 }

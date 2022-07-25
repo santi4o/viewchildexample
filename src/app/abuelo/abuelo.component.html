@@ -1,19 +1,23 @@
 <p>abuelo works!</p>
-<app-padre></app-padre>
+
+<button (click)="togglePadreView()">Mostrar / Ocultar Padre</button>
+
+<app-padre *ngIf="viewChild"></app-padre>
 
 <div>
     <h2>Accediendo a los métodos de app-padre</h2>
     <ul>
         <li>
-            {{ this.metodoPadre1() }}
+            {{ this.nombrePadre }}
         </li>
         <li>
-            {{ this.metodoPadre2() }}
+            {{ this.apellidoPadre }}
         </li>
     </ul>
 </div>
 
 <div>
     <h2>Mandando un metodo a app-padre</h2>
+    <input [(ngModel)]="mensaje" type="text">
     <button (click)="this.mandarPadre()">Mandar</button>
 </div>

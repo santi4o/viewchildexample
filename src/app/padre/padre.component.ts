@@ -9,7 +9,7 @@ export class PadreComponent implements OnInit {
 
   nombre: string;
   apellido: string;
-  
+
   diAlgo: any;
 
   constructor() {
@@ -29,11 +29,11 @@ export class PadreComponent implements OnInit {
   }
 
   public getName(): string {
-    return 'Hola, soy el padre, mi nombre es ' + this.nombre;
+    return this.nombre;
   }
 
   public getLastName(): string {
-    return 'Hola, soy el padre, mi apellido es ' + this.apellido;
+    return this.apellido;
   }
 
 }
